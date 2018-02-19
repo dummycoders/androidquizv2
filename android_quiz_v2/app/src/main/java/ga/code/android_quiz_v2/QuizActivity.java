@@ -1,21 +1,18 @@
 package ga.code.android_quiz_v2;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Random;
-
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends Activity {
 
     Button answer1, answer2, answer3;
 
-    TextView score, question;
+    TextView score, question, fragezaehler;
 
     private Questions mQuestions = new Questions();
 
@@ -23,9 +20,9 @@ public class QuizActivity extends AppCompatActivity {
     private int mScore = 0;
     private int mQuestionLength = mQuestions.mQuestions.length;
 
-    private int mQuestionNumber = 1;
+    private int mQuestionCount = 1;
+    private int mQuestionNumber = 0;
 
-    Random r;
 
 
 
@@ -34,18 +31,21 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        r = new Random();
 
         answer1 = (Button) findViewById(R.id.answer1);
         answer2 = (Button) findViewById(R.id.answer2);
         answer3 = (Button) findViewById(R.id.answer3);
 
         score = (TextView) findViewById(R.id.score);
+        fragezaehler = (TextView) findViewById(R.id.fragezaehler);
         question = (TextView) findViewById(R.id.question);
 
         score.setText("Punkte: " + mScore);
+        fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+
 
         updateQuestion(mQuestionNumber++);
+        mQuestionCount++;
 
         answer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +53,53 @@ public class QuizActivity extends AppCompatActivity {
                 if(answer1.getText() == mAnswer) {
                     mScore++;
                     score.setText("Punkte: " + mScore);
-                    updateQuestion(mQuestionNumber++);
+
+
+
+                    answer1.setBackgroundResource(R.color.colorCorrect);
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
+
                 }
                 else{
-                    gameOver();
+                    score.setText("Punkte: " + mScore);
+
+
+                    answer1.setBackgroundResource(R.color.colorFalse);
+                    if(answer2.getText() == mAnswer) {
+                        answer2.setBackgroundResource(R.color.colorCorrect);
+                    }
+                    if(answer3.getText() == mAnswer) {
+                        answer3.setBackgroundResource(R.color.colorCorrect);
+                    }
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
                 }
 
             }
@@ -68,10 +111,48 @@ public class QuizActivity extends AppCompatActivity {
                 if(answer2.getText() == mAnswer) {
                     mScore++;
                     score.setText("Punkte: " + mScore);
-                    updateQuestion(mQuestionNumber++);
+                    answer2.setBackgroundResource(R.color.colorCorrect);
+
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
                 }
                 else{
-                    gameOver();
+                    score.setText("Punkte: " + mScore);
+                    answer2.setBackgroundResource(R.color.colorFalse);
+                    if(answer1.getText() == mAnswer) {
+                        answer1.setBackgroundResource(R.color.colorCorrect);
+                    }
+                    if(answer3.getText() == mAnswer) {
+                        answer3.setBackgroundResource(R.color.colorCorrect);
+                    }
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
                 }
             }
         });
@@ -82,47 +163,71 @@ public class QuizActivity extends AppCompatActivity {
                 if(answer3.getText() == mAnswer) {
                     mScore++;
                     score.setText("Punkte: " + mScore);
-                    updateQuestion(mQuestionNumber++);
+                    answer3.setBackgroundResource(R.color.colorCorrect);
+
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
                 }
                 else{
-                    gameOver();
+                    score.setText("Punkte: " + mScore);
+                    answer3.setBackgroundResource(R.color.colorFalse);
+                    if(answer1.getText() == mAnswer) {
+                        answer1.setBackgroundResource(R.color.colorCorrect);
+                    }
+                    if(answer2.getText() == mAnswer) {
+                        answer2.setBackgroundResource(R.color.colorCorrect);
+                    }
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragezaehler.setText(mQuestionCount + "/" + mQuestionLength);
+                            updateQuestion(mQuestionNumber++);
+                            mQuestionCount++;
+
+                        }
+                    }, 1000);
+
+                    openResultsActivity();
+
                 }
             }
         });
         }
 
         private void updateQuestion(int num) {
+        answer1.setBackgroundResource(R.color.colorDefault);
+        answer2.setBackgroundResource(R.color.colorDefault);
+        answer3.setBackgroundResource(R.color.colorDefault);
         question.setText(mQuestions.getQuestions(num));
         answer1.setText(mQuestions.getChoice1(num));
         answer2.setText(mQuestions.getChoice2(num));
         answer3.setText(mQuestions.getChoice3(num));
 
         mAnswer = mQuestions.getCorrectAnswer(num);
-        mQuestionNumber++;
     }
 
-    private void gameOver() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(QuizActivity.this);
-        alertDialogBuilder
-                .setMessage("Verloren! Dein Punktestand: " + mScore)
-                .setCancelable(false)
-                .setPositiveButton("Neues Spiel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            startActivity(new Intent(getApplicationContext(), QuizActivity.class));
-                            }
-                        })
 
-                .setNegativeButton("Beenden",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+    private void openResultsActivity(){
+        if (mQuestionNumber == mQuestionLength) {
+            Intent intent = new Intent(this, ResultsActivity.class);
+            startActivity(intent);
+        }
 
-                            }
-                        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }
